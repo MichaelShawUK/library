@@ -108,9 +108,7 @@ newBookBtn.addEventListener('click', () => {
   } else {
     newBook = new Book(newTitle.value, newAuthor.value, newPages.value, false);
   }
-  console.log(newBook);
   myLibrary.push(newBook);
-  // haveRead.setAttribute('checked', '');
   updateLibrary(false);
 
 })
@@ -121,4 +119,19 @@ function updateLibrary(e) {
   }
   if (e) myLibrary.splice(e.target.dataset.index, 1);
   showLibrary();
+}
+
+const sortBtn = document.querySelector('#sort-btn');
+const sortBy = document.querySelector('#sort');
+
+sortBtn.addEventListener('click', e => {
+  sortBooks(sortBy.selectedOptions[0].value);
+})
+
+function sortBooks(criteria) {
+  myLibrary.sort((a,b) => {
+    if (b[criteria] < a[criteria]) return 1;
+    else return -1;
+  })
+  updateLibrary();
 }
