@@ -18,7 +18,6 @@ const theOutsider = new Book('The Outsider', 'Albert Camus', 287, true);
 let myLibrary = [animalFarm, wolfHall, eastOfEden, warAndPeace, foundation, theOutsider];
 const container = document.querySelector('.container');
 
-
 function showLibrary() {
 
   const card = document.createElement('div');
@@ -29,17 +28,21 @@ function showLibrary() {
     const title = document.createElement('p');
     const author = document.createElement('p');
     const pages = document.createElement('p');
-    const read = document.createElement('p');
+    const read = document.createElement('span');
+    const check = document.createElement('input');
+    check.setAttribute('type', 'checkbox');
+    check.setAttribute('data-index', myLibrary.indexOf(book));
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-btn');
 
-    title.innerText = `Title: ${book.title}`;
-    author.innerText = `Author: ${book.author}`;
-    pages.innerText = `Pages: ${book.pages}`;
-    read.innerText = `${book.read ? 'Read' : 'Not Read Yet'}`;
+    title.innerText = `${book.title}`;
+    author.innerText = `${book.author}`;
+    pages.innerText = `${book.pages} pages`;
+    read.innerText = ` Read`;
     removeButton.innerText = 'Remove';
+    if (book.read) check.setAttribute('checked', 'true');
     
-    container.lastChild.append(title, author, pages, read, removeButton);
+    container.lastChild.append(title, author, pages, check, read, removeButton);
     container.lastChild.classList.add('card');
     removeButton.setAttribute('data-index', myLibrary.indexOf(book));
 
@@ -52,47 +55,61 @@ function showLibrary() {
 
   let removeButtons = document.querySelectorAll('.remove-btn');
 
-  // removeButtons.forEach(btn => {
-  //   btn.addEventListener('click', e => {
-  //     while (container.firstChild) {
-  //       container.removeChild(container.firstChild);
-  //     }
-  //     myLibrary.splice(e.target.dataset.index, 1);
-  //     showLibrary();
-  //   })
-  // })
   removeButtons.forEach(btn => {
-    btn.addEventListener('click', e => {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
-      myLibrary.splice(e.target.dataset.index, 1);
-      showLibrary();
-    })
+    btn.addEventListener('click', updateLibrary);
   })
+
+  const checkboxes = document.querySelectorAll("input[type='checkbox']");
+  checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('click', e => {
+    myLibrary[e.target.dataset.index].read = e.target.checked;
+    updateLibrary();
+
+  })
+})
 }
 
 showLibrary();
 
 const addBook = document.getElementById('add-book');
 const form = document.querySelector('form');
-console.log(addBook);
-addBook.addEventListener('click', (e) => {
-  console.log(e);
-  form.style.display = 'grid';
 
-})
 
 const newBookBtn = document.getElementById('add-new-book');
 const newTitle = document.getElementById('title');
 const newAuthor = document.getElementById('author');
 const newPages = document.getElementById('pages');
 const haveRead = document.getElementById('read');
+const haventRead = document.getElementById('unread');
+
+addBook.addEventListener('click', (e) => {  
+  if (e.target.textContent == 'Add Book') {
+    newTitle.value = '';
+    newAuthor.value = '';
+    newPages.value = '';
+    e.target.textContent = 'Hide';
+    form.style.display = 'grid';
+  } else {
+    form.style.display = 'none';
+    e.target.textContent = 'Add Book'
+  }
+})
+
+let newBook;
+
 newBookBtn.addEventListener('click', () => {
-  let newBook = new Book(newTitle.value, newAuthor.value, newPages.value, haveRead.checked);
+  if (!newTitle.value) {
+    alert('Please enter a book title');
+    return;
+  }
+  if (haveRead.checked) {
+    newBook = new Book(newTitle.value, newAuthor.value, newPages.value, true);
+  } else {
+    newBook = new Book(newTitle.value, newAuthor.value, newPages.value, false);
+  }
   console.log(newBook);
   myLibrary.push(newBook);
-  haveRead.setAttribute('checked', '');
+  // haveRead.setAttribute('checked', '');
   updateLibrary(false);
 
 })
