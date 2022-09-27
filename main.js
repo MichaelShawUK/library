@@ -23,7 +23,6 @@ function showLibrary() {
   const card = document.createElement('div');
 
   for (let book of myLibrary) {
-    console.dir(myLibrary);
     container.appendChild(card.cloneNode());
     const title = document.createElement('p');
     title.classList.add('title');
@@ -130,6 +129,11 @@ sortBtn.addEventListener('click', e => {
 
 function sortBooks(criteria) {
   myLibrary.sort((a,b) => {
+    if (criteria == 'author') {
+       if (b.author.split(' ').reverse()[0] < a.author.split(' ').reverse()[0]) {
+        return 1; 
+       } else return -1;
+    }
     if (b[criteria] < a[criteria]) return 1;
     else return -1;
   })
