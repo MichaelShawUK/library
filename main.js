@@ -26,6 +26,7 @@ function showLibrary() {
     console.dir(myLibrary);
     container.appendChild(card.cloneNode());
     const title = document.createElement('p');
+    title.classList.add('title');
     const author = document.createElement('p');
     const pages = document.createElement('p');
     const read = document.createElement('span');

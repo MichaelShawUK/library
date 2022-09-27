@@ -5,6 +5,10 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 
+body {
+  color:rgb(5, 5, 85);
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -15,16 +19,27 @@
 .card {
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px #ddd;
   position: relative;
 }
 
+.card p{
+  padding: 5px 0; 
+}
+
+.card input {
+  margin: 5px 0;
+}
+
 .read {
-  background: rgb(218, 245, 218);
+  background:rgb(121, 121, 133);
+  color: white;
+  box-shadow: 3px 3px 5px black;
+  text-shadow:1px 1px black;
 }
 
 .unread {
-  background: rgb(250, 220, 220);
+  background: rgb(226, 225, 225);
+  box-shadow: 2px 2px 5px #444;
 }
 
 form {
@@ -38,4 +53,39 @@ form {
   position: absolute;
   bottom: 10px;
   right: 10px;  
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+header {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+button {
+  padding: 5px;
+  font-weight: bold;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+fieldset label {
+  margin-right: 10px;
+}
+
+#add-book {
+  width: 100px;
+  padding: 10px;
+}
+
+h1 {
+  padding: 20px;
 }
